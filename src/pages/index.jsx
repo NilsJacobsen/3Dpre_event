@@ -10,12 +10,39 @@ import Scene from '@/components/canvas/Scene'
 const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
   ssr: false,
 })
+import { useEffect, useState } from 'react'
+import io from 'socket.io-client'
+let socket;
 
 // dom components goes here
 const DOM = () => {
+  const [input, setInput] = useState('')
+
+  useEffect(() => socketInitializer(), [])
+
+  const socketInitializer = async () => {
+    await fetch('/api/socket');
+    socket = io()
+
+    socket.on('connect', () => {
+      console.log('connected')
+    })
+
+    socket.on('update-input', msg => {
+      setInput(msg)
+    })
+  }
+
+  const onChangeHandler = (e) => {
+    setInput(e.target.value)
+    socket.emit('input-change', e.target.value)
+  }
   return (
-    // Step 5 - delete Instructions components
-    <div></div>
+    <input
+      placeholder="Type something"
+      value={input}
+      onChange={onChangeHandler}
+    />
   )
 }
 
