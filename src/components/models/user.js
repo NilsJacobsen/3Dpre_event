@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
 
 export function Cube(props) {
-  const [ref, api] = useBox(() => ({ mass: 5, type: "Dynamic", position: [0, 20, 0], ...props }))
+  const [ref, api] = useBox(() => ({ mass: 20, type: "Dynamic", position: [0, 20, 0], ...props }))
   const code = useCodes();
   const moveForward = (distance) => {
     const speed = distance*100 / (-1);
@@ -61,10 +61,39 @@ export function Plattform(props) {
     position: [0, 1, 0], 
     ...props }
   ))
-
   return (
     <mesh ref={ref}>
       <boxGeometry args={[20, 1, 60]}/>
+      <meshLambertMaterial color="#ffffff" opacity={0} transparent />
+    </mesh>
+  )
+}
+
+export function BorderRightBuilding(props) {
+  const [ref, api] = useBox(() => ({ 
+    mass: 5, 
+    type: "Static", 
+    position: [0, 5, -25.5], 
+    ...props }
+  ))
+  return (
+    <mesh ref={ref}>
+      <boxGeometry args={[19, 9, 7]}/>
+      <meshLambertMaterial color="#ffffff" opacity={0} transparent />
+    </mesh>
+  )
+}
+export function BorderStairs(props) {
+  const [ref, api] = useBox(() => ({ 
+    mass: 5, 
+    type: "Static", 
+    position: [4.5, 3.8, -16], 
+    rotation: [Math.PI / 4.7, 0, 0],
+    ...props }
+  ))
+  return (
+    <mesh ref={ref}>
+      <boxGeometry args={[5, 3, 17]}/>
       <meshLambertMaterial color="#ffffff" opacity={0} transparent />
     </mesh>
   )
