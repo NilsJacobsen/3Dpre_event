@@ -2,7 +2,6 @@ import Train from "../models/train"
 import Station from "../models/station"
 import { Physics } from '@react-three/cannon'
 import { Cube, Plattform, BorderStairs, BorderRightBuilding } from "../models/user"
-import {MeshNormalMaterial, BoxBufferGeometry } from 'three'
 import OtherUser from "../models/otherUser"
 
 const Scene = ({setUser, clients, socketClient}) => {

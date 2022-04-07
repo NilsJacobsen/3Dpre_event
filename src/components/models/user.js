@@ -19,7 +19,7 @@ export function Cube({setUser}) {
   });
 
   function roundNumber(number){
-    return Math.round((number + Number.EPSILON) * 7) / 7;
+    return Math.round((number + Number.EPSILON) * 15) / 15;
   }
 
   function checkMovement(){
@@ -64,7 +64,7 @@ export function Cube({setUser}) {
   return (
     <mesh ref={ref}>
       <boxGeometry />
-      <meshLambertMaterial attach='material' color='white' />
+      <meshLambertMaterial attach='material' color='red' />
     </mesh>
   )
 }
