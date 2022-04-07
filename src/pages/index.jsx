@@ -42,12 +42,21 @@ const Page = () => {
       position: msg.position,
     })
   }
-  return (
-    <>
-      <DOM />
-      {/* @ts-ignore */}
-      <Scene r3f setUser={setUser} />
-    </>
-  )
+  if(!(clients == undefined || clients == null || socketClient == undefined || socketClient == null)){
+    return (
+      <>
+        <DOM />
+        {/* @ts-ignore */}
+        <Scene r3f setUser={setUser} clients={clients} socketClient={socketClient}/>
+      </>
+    )
+  }else{
+    return (
+      <>
+        <div>Loading...</div>
+        <div r3f ></div>
+      </>
+    )
+  }
 }
-export default Page
+export default Page;

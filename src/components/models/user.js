@@ -22,7 +22,7 @@ export function Cube({setUser}) {
     return Math.round((number + Number.EPSILON) * 10) / 10;
   }
 
-  function checkMovement(movment){
+  function checkMovement(){
     let newMovement = {
       position: [
         roundNumber(movement.current.position[0]),
@@ -35,8 +35,6 @@ export function Cube({setUser}) {
         roundNumber(movement.current.rotation[2]),
       ]
     }
-
-    let isChanged = false;
     if(JSON.stringify(newMovement) != JSON.stringify(oldMovement)){
       setUser(newMovement);
       oldMovement = newMovement;
@@ -55,7 +53,7 @@ export function Cube({setUser}) {
   }
   useFrame((_, delta) => {
     //update socket
-    checkMovement(movement.current);
+    checkMovement();
     //move user
     const speed = code.current.has('ShiftLeft') ? 5 : 2
     if (code.current.has('KeyW')) moveForward(delta * speed)
