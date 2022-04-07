@@ -19,7 +19,7 @@ export function Cube({setUser}) {
   });
 
   function roundNumber(number){
-    return Math.round((number + Number.EPSILON) * 10) / 10;
+    return Math.round((number + Number.EPSILON) * 7) / 7;
   }
 
   function checkMovement(){

@@ -3,6 +3,7 @@ import Station from "../models/station"
 import { Physics } from '@react-three/cannon'
 import { Cube, Plattform, BorderStairs, BorderRightBuilding } from "../models/user"
 import {MeshNormalMaterial, BoxBufferGeometry } from 'three'
+import OtherUser from "../models/otherUser"
 
 const Scene = ({setUser, clients, socketClient}) => {
 
@@ -15,22 +16,19 @@ const Scene = ({setUser, clients, socketClient}) => {
         <Plattform args={[20, 1, 60]}/>
         <BorderRightBuilding args={[19, 9, 7]}/>
         <BorderStairs args={[4, 3, 17]}/>
-        
-      </Physics>
-      {Object.keys(clients)
-        .filter((clientKey) => clientKey !== socketClient.id)
-        .map((client) => {
-            const { position, rotation } = clients[client]
-            return (
-                <mesh
-                    key={client}
-                    position={position}
-                    rotation={rotation}
-                    geometry={new BoxBufferGeometry()}
-                    material={new MeshNormalMaterial()}
-                />
-            )
-        })}
+        {Object.keys(clients)
+          .filter((clientKey) => clientKey !== socketClient.id)
+          .map((client) => {
+              const { position, rotation } = clients[client]
+              return (
+                  <OtherUser
+                      key={client}
+                      position={position}
+                      rotation={rotation}
+                  />
+              )
+          })}
+      </Physics> 
     </>
   )
 }
