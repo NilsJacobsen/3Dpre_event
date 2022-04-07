@@ -2,8 +2,48 @@ import { usePlane, useBox } from '@react-three/cannon'
 import { useFrame } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
 
-export function Cube(props) {
-  const [ref, api] = useBox(() => ({ mass: 20, type: "Dynamic", position: [0, 20, 0], ...props }))
+let oldMovement = {
+  position: [0,0,0],
+  rotation: [0,0,0]
+}
+
+export function Cube({setUser}) {
+  const [ref, api] = useBox(() => ({ mass: 20, type: "Dynamic", position: [0, 20, 0] }))
+  const movement = useRef({
+    position: [0,0,0],
+    rotation: [0,0,0]
+  })
+  useEffect(() => {
+    api.position.subscribe(v => movement.current.position = v);
+    api.rotation.subscribe(v => movement.current.rotation = v);
+  });
+
+  function roundNumber(number){
+    return Math.round((number + Number.EPSILON) * 10) / 10;
+  }
+
+  function checkMovement(movment){
+    let newMovement = {
+      position: [
+        roundNumber(movement.current.position[0]),
+        roundNumber(movement.current.position[1]),
+        roundNumber(movement.current.position[2]),
+      ],
+      rotation: [
+        roundNumber(movement.current.rotation[0]),
+        roundNumber(movement.current.rotation[1]),
+        roundNumber(movement.current.rotation[2]),
+      ]
+    }
+
+    let isChanged = false;
+    if(JSON.stringify(newMovement) != JSON.stringify(oldMovement)){
+      setUser(newMovement);
+      oldMovement = newMovement;
+    }
+    
+  }
+  //move user
   const code = useCodes();
   const moveForward = (distance) => {
     const speed = distance*100 / (-1);
@@ -14,6 +54,9 @@ export function Cube(props) {
     api.velocity.set(-speed,0,speed);
   }
   useFrame((_, delta) => {
+    //update socket
+    checkMovement(movement.current);
+    //move user
     const speed = code.current.has('ShiftLeft') ? 5 : 2
     if (code.current.has('KeyW')) moveForward(delta * speed)
     if (code.current.has('KeyA')) moveRight(-delta * speed)
@@ -58,7 +101,7 @@ export function Plattform(props) {
   const [ref, api] = useBox(() => ({ 
     mass: 5, 
     type: "Static", 
-    position: [0, 1, 0], 
+    position: [0, 0.5, 0], 
     ...props }
   ))
   return (
