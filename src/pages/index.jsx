@@ -12,8 +12,9 @@ const DOM = ({}) => {
 }
 
 const Page = () => {
-  const [socketClient, setSocketClient] = useState(null)
-  const [clients, setClients] = useState({})
+  const [socketClient, setSocketClient] = useState(null);
+  const [clients, setClients] = useState({});
+  const [collectedUser, setCollectedUser] = useState({});
 
   useEffect(() => {
     // On mount initialize the socket connection
@@ -47,7 +48,7 @@ const Page = () => {
       <>
         <DOM />
         {/* @ts-ignore */}
-        <Scene r3f setUser={setUser} clients={clients} socketClient={socketClient}/>
+        <Scene r3f setUser={setUser} clients={clients} socketClient={socketClient} collectedUser={collectedUser} setCollectedUser={setCollectedUser}/>
       </>
     )
   }else{

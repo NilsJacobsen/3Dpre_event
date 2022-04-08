@@ -1,14 +1,21 @@
 import { usePlane, useBox } from '@react-three/cannon'
 import { useFrame } from '@react-three/fiber'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
 
 let oldMovement = {
   position: [0,0,0],
   rotation: [0,0,0]
 }
 
-export function Cube({setUser}) {
-  const [ref, api] = useBox(() => ({ mass: 20, type: "Dynamic", position: [0, 20, 0] }))
+export function Cube({setUser, clients, socketClient, collectedUser, setCollectedUser}) {
+  const [ref, api] = useBox(() => ({ 
+    mass: 20, 
+    type: "Dynamic", 
+    position: [0, 20, 0],
+    onCollide: e => {
+      checkCollition(e);
+    }
+  }))
   const movement = useRef({
     position: [0,0,0],
     rotation: [0,0,0]
@@ -17,6 +24,19 @@ export function Cube({setUser}) {
     api.position.subscribe(v => movement.current.position = v);
     api.rotation.subscribe(v => movement.current.rotation = v);
   });
+
+  function checkCollition(e){
+    //console.log(e.contact.bi.name);
+    if(e.contact.bi.name !== ""){
+      let obj = collectedUser;
+      obj[e.contact.bi.name] = {
+        "firstname": "peter",
+        "lastname": "lustig",
+        "link": "https://www.youtube.com"
+      }
+      setCollectedUser(obj);
+    }
+  }
 
   function roundNumber(number){
     return Math.round((number + Number.EPSILON) * 15) / 15;
@@ -65,9 +85,44 @@ export function Cube({setUser}) {
     <mesh ref={ref}>
       <boxGeometry />
       <meshLambertMaterial attach='material' color='red' />
+      <Text scale={[8, 4, 4]} opacity={0.5} position={[0, 0, 0]}>
+        {clients[socketClient.id].name}
+      </Text>
     </mesh>
   )
 }
+
+function Text({ children, position, scale, color = 'white', fontSize = 30 }) {
+  const canvas = useMemo(() => {
+    let fontface = 'Arial'
+    let fontsize = fontSize
+    let borderThickness = 4
+
+    let canvas = document.createElement('canvas')
+    let context = canvas.getContext('2d')
+    context.textBaseline = 'middle'
+    context.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif`
+
+    let metrics = context.measureText(children)
+    let textWidth = metrics.width
+
+    context.lineWidth = borderThickness
+
+    context.fillStyle = color
+    context.fillText(children, textWidth - textWidth * 0.8, fontsize)
+    return canvas
+  }, [children])
+
+  return (
+    <sprite scale={scale} position={position}>
+      <spriteMaterial sizeAttenuation={false} attach="material" transparent alphaTest={0.5}>
+        <canvasTexture attach="map" image={canvas} />
+      </spriteMaterial>
+    </sprite>
+  )
+}
+
+//-----------------------------
 
 export function Plane(props) {
   const [ref] = usePlane(() => ({ transparent: true, rotation: [-Math.PI / 2, 0, 0], position: [0,1,0], ...props }))
