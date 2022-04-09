@@ -71,6 +71,7 @@ const Header = ({ title = titleDefault }) => {
         <meta name='theme-color' content='#000' />
         <link rel='shortcut icon' href='/icons/favicon.ico' />
 
+
         {/* 
       Twitter Summary card
         documentation: https://dev.twitter.com/cards/getting-started

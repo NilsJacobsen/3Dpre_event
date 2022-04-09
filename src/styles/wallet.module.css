@@ -1,0 +1,41 @@
+.walletContainer{
+    width: 350px;
+    height: 75%;
+    position: absolute;
+    top: 140px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.walletCard{
+    width: 100%;
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    background-color: rgba(17, 25, 40, 0.5);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+}.walletCard:hover{
+    background-color: rgba(17, 25, 40, 0.8);
+}
+.firstContainer{
+    border-radius: 16px;
+    overflow: hidden;
+}
+.secondContainer{
+    color: white;
+    font-family: 'Share Tech';
+    font-size: 18px;
+    font-weight: 500;
+    height: 26px;
+}
+.name{
+    font-size: 20px;
+    opacity: 1;
+}
+.desc{
+    opacity: 0.7;
+}

@@ -4,7 +4,7 @@ import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-
 const customConfig = {
   dictionaries: [adjectives, colors],
   separator: '-',
-  length: 2,
+  length: 1,
 };
 
 let clients = {};
@@ -23,7 +23,7 @@ const SocketHandler = (req, res) => {
       );
       clients[socket.id] = {
         name: uniqueNamesGenerator({
-          dictionaries: [adjectives, colors, animals]
+          dictionaries: [adjectives, animals]
         }),
         position: [0,0,0],
         rotation: [0,0,0]

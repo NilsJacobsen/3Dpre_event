@@ -1,20 +1,27 @@
 import Scene from '@/components/canvas/Scene'
+import Headline from '@/components/dom/Headline'
+import Navigation from '@/components/dom/navigation'
+import Wallet from '@/components/dom/wallet'
 import { useEffect, useState } from 'react'
 import io from 'socket.io-client'
+import styles from './../styles/page.module.css'
 
 
 // dom components goes here
-const DOM = ({}) => {
- 
+const DOM = ({clients, collectedUser}) => {
   return (
-    <></>
+    <>
+      <Navigation />
+      <Headline />
+      {collectedUser.length !== 0 ? <Wallet collectedUser={collectedUser}/> : ""}
+    </>
   )
 }
 
 const Page = () => {
   const [socketClient, setSocketClient] = useState(null);
   const [clients, setClients] = useState({});
-  const [collectedUser, setCollectedUser] = useState({});
+  const [collectedUser, setCollectedUser] = useState([]);
 
   useEffect(() => {
     // On mount initialize the socket connection
@@ -46,8 +53,10 @@ const Page = () => {
   if(!(clients == undefined || clients == null || socketClient == undefined || socketClient == null)){
     return (
       <>
-        <DOM />
-        {/* @ts-ignore */}
+        <div className={styles.container}>
+          <DOM clients={clients} collectedUser={collectedUser}/>
+          {/* @ts-ignore */}
+        </div>
         <Scene r3f setUser={setUser} clients={clients} socketClient={socketClient} collectedUser={collectedUser} setCollectedUser={setCollectedUser}/>
       </>
     )

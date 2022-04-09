@@ -24,7 +24,7 @@ const LCanvas = ({ children }) => {
       mode='concurrent'
       style={{
         position: 'absolute',
-        top: 0,
+        top: 130,
       }}
       orthographic 
       shadows
@@ -50,8 +50,8 @@ const LightWarm = () => {
   light.position.set(-100, 100, 100)
   light.castShadow = true // default false
   //Set up shadow properties for the light
-  light.shadow.mapSize.width = 1024 // default
-  light.shadow.mapSize.height = 1024 // default
+  light.shadow.mapSize.width = 512 // default
+  light.shadow.mapSize.height = 512 // default
   light.shadow.camera.near = 0.1 // default
   light.shadow.camera.far = 300 // default
   light.shadow.camera.top = -100 // default
@@ -66,8 +66,8 @@ const LightCold = () => {
   light.position.set(50, 100, -100)
   light.castShadow = true // default false
   //Set up shadow properties for the light
-  light.shadow.mapSize.width = 1024 // default
-  light.shadow.mapSize.height = 1024 // default
+  light.shadow.mapSize.width = 512 // default
+  light.shadow.mapSize.height = 512 // default
   light.shadow.camera.near = 0.1 // default
   light.shadow.camera.far = 300 // default
   light.shadow.camera.top = -100 // default

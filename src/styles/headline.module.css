@@ -1,0 +1,13 @@
+.headlineItem{
+    width: 500px;
+    margin-left: 40px;
+    margin-top: 80px;
+}
+.headline{
+    font-family: 'Share Tech';
+    font-size: 140px;
+    font-weight: 600;
+    line-height: 170px;
+    opacity: 0.7;
+    color: white;
+}

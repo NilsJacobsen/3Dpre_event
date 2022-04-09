@@ -26,16 +26,21 @@ export function Cube({setUser, clients, socketClient, collectedUser, setCollecte
   });
 
   function checkCollition(e){
-    //console.log(e.contact.bi.name);
-    if(e.contact.bi.name !== ""){
-      let obj = collectedUser;
-      obj[e.contact.bi.name] = {
-        "firstname": "peter",
-        "lastname": "lustig",
-        "link": "https://www.youtube.com"
+    let name = e.contact.bi.name;
+    if(name !== ""){
+      if(collectedUser.find(item => item == name) == undefined){
+        let arr = collectedUser;
+        arr.push(name);
+        
       }
-      setCollectedUser(obj);
+    }else if(e.contact.bj.name !== ""){
+      if(collectedUser.find(item => item == e.contact.bj.name) == undefined){
+        let arr = collectedUser;
+        arr.push(e.contact.bj.name);
+        
+      }
     }
+    // console.log(collectedUser);
   }
 
   function roundNumber(number){
