@@ -82,7 +82,7 @@ export function Cube({setUser, clients, socketClient, collectedUser, setCollecte
     if (code.current.has('KeyD')) moveRight(delta * speed)
   })
   return (
-    <mesh ref={ref}>
+    <mesh castShadow receiveShadow ref={ref}>
       <boxGeometry />
       <meshLambertMaterial attach='material' color='red' />
       <Text scale={[8, 4, 4]} opacity={0.5} position={[0, 0, 0]}>

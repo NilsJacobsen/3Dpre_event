@@ -19,7 +19,7 @@ export default function OtherUser({position, rotation, name}) {
   })
 
   return (
-    <mesh ref={ref} name={name}>
+    <mesh ref={ref} name={name} castShadow receiveShadow >
       <boxGeometry args={[1, 1, 1]}/>
       <meshLambertMaterial color="#ffffff" />
       <Text scale={[8, 4, 4]} opacity={0.5} position={[0, 0, 0]}>

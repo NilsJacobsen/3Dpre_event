@@ -1,32 +1,11 @@
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
-import { useFrame } from '@react-three/fiber';
-import { easeInOutQuad } from "@/helpers/map";
 
-export default function Train({}) {
+export default function Model(props) {
   const group = useRef();
   const { nodes, materials } = useGLTF("/train.gltf");
-
-  const startTrainPos = -200;
-  const endTrainPos = 200;
-  let trainPos = startTrainPos;
-
-  let timer = 0;
-
-  useFrame(({ clock }) => {
-    let timer = clock.getElapsedTime();
-    trainPos = easeInOutQuad(Math.abs(trainPos),1,0.1,10)
-   
-    //console.log(timer);
-    
-    if(trainPos >= endTrainPos){
-      trainPos = startTrainPos;
-    }
-    group.current.position.z = 0;
-  })
-
   return (
-    <group ref={group} dispose={null}>
+    <group ref={group} {...props} dispose={null}>
       <mesh
         castShadow
         receiveShadow
@@ -49,7 +28,7 @@ export default function Train({}) {
         castShadow
         receiveShadow
         geometry={nodes.Cube007.geometry}
-        material={nodes.Cube007.material}
+        material={materials["Material.010"]}
         position={[-13.44, -0.28, 43.34]}
         rotation={[0, -Math.PI / 2, 0]}
         scale={[3.68, 3.68, 2.96]}
