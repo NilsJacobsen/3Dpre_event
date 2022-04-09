@@ -1,11 +1,30 @@
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 
-export default function Model(props) {
+export default function Train({play}) {
   const group = useRef();
   const { nodes, materials } = useGLTF("/train.gltf");
+
+  const startTrainPos = -2000;
+  const endTrainPos = 2000;
+  let trainPos = startTrainPos;
+
+  useFrame((_, delta) => {
+    trainPos = trainPos + 3;
+    if(trainPos > -400 && trainPos < -396){
+      play();
+      console.log("train");
+    }
+
+    if(trainPos >= endTrainPos){
+      trainPos = startTrainPos;
+    }
+    group.current.position.z = trainPos;
+  })
+
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} dispose={null}>
       <mesh
         castShadow
         receiveShadow

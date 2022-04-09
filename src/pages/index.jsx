@@ -5,15 +5,27 @@ import Wallet from '@/components/dom/wallet'
 import { useEffect, useState } from 'react'
 import io from 'socket.io-client'
 import styles from './../styles/page.module.css'
+import Sound from 'react-sound';
+import useSound from 'use-sound';
+
 
 
 // dom components goes here
 const DOM = ({clients, collectedUser}) => {
+  const [isClicked, setIsClicked] = useState(false);
+
   return (
     <>
+      <Sound
+        url="/atmo.mp3"
+        playStatus={isClicked ? Sound.status.PLAYING : Sound.status.STOPPED}
+        volume={30}
+      />
+   
       <Navigation />
-      <Headline />
+      <Headline/>
       {collectedUser.length !== 0 ? <Wallet collectedUser={collectedUser}/> : ""}
+      <button onClick={()=>setIsClicked(true)}>Sound on</button>
     </>
   )
 }
@@ -22,6 +34,7 @@ const Page = () => {
   const [socketClient, setSocketClient] = useState(null);
   const [clients, setClients] = useState({});
   const [collectedUser, setCollectedUser] = useState([]);
+  const [play] = useSound("/train.wav");
 
   useEffect(() => {
     // On mount initialize the socket connection
@@ -57,7 +70,7 @@ const Page = () => {
           <DOM clients={clients} collectedUser={collectedUser}/>
           {/* @ts-ignore */}
         </div>
-        <Scene r3f setUser={setUser} clients={clients} socketClient={socketClient} collectedUser={collectedUser} setCollectedUser={setCollectedUser}/>
+        <Scene r3f setUser={setUser} play={play} clients={clients} socketClient={socketClient} collectedUser={collectedUser} setCollectedUser={setCollectedUser}/>
       </>
     )
   }else{

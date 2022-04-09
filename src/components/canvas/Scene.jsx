@@ -4,12 +4,12 @@ import { Physics } from '@react-three/cannon'
 import { Cube, Plattform, BorderStairs, BorderRightBuilding } from "../models/user"
 import OtherUser from "../models/otherUser"
 
-const Scene = ({setUser, clients, socketClient, collectedUser, setCollectedUser}) => {
+const Scene = ({setUser, play, clients, socketClient, collectedUser, setCollectedUser}) => {
 
   return (
     <>
       <Physics>
-        <Train />
+        <Train play={play}/>
         <Station />
         <Cube setUser={setUser} clients={clients} socketClient={socketClient} collectedUser={collectedUser} setCollectedUser={setCollectedUser}/>
         <Plattform args={[20, 1, 60]}/>
